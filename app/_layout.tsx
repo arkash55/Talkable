@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AuthProvider } from "./context/AuthContext";
 import { DarkTheme, LightTheme } from './themes/theme';
 
 export default function RootLayout() {
@@ -26,7 +27,9 @@ function ThemedRoot() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <AuthProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </AuthProvider>
     </SafeAreaView>
   );
 }
