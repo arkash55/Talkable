@@ -1,10 +1,25 @@
 // app/(tabs)/_layout.tsx
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Redirect, Tabs } from 'expo-router';
+import { ActivityIndicator, useColorScheme, View } from 'react-native';
+import { useAuth } from '../context/AuthContext';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
+
+    const { user, loading } = useAuth();
+
+    if (loading) {
+        return (
+        <View className="flex-1 justify-center items-center">
+            <ActivityIndicator size="large" />
+        </View>
+        );
+    }
+
+    if (!user) {
+        return <Redirect href="/(auth)/login" />;
+    }
 
   return (
     <Tabs
